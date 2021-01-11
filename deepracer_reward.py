@@ -266,7 +266,7 @@ class Reward:
         if not is_offtrack:
             reward += 10
         else:
-            reward -= 10
+            reward -= 20
 
         
         ## Reward if car goes close to optimal racing line ##
@@ -314,7 +314,11 @@ class Reward:
         else:
             finish_reward = 0
         reward += finish_reward
-        
+
+        # progress reward
+        # give out an additional 2k for progress - gives very little over the first 75%
+        var_a = 36000/(100**9)
+        reward += var_a*(progress**8)
 
         ####################### VERBOSE #######################
         

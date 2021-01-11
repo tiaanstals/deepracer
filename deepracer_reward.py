@@ -303,6 +303,19 @@ class Reward:
         elif speed - optimals[2] and (not is_offtrack):
             reward += 10
         
+
+        ## Incentive for finishing the lap in less steps ##
+        REWARD_FOR_FASTEST_TIME = 2000 # should be adapted to track length and other rewards
+        STANDARD_TIME = 15  # seconds (time that is easily done by model)
+        FASTEST_TIME = 8  # seconds (best time of 1st place on the track)
+        if progress == 100:
+            finish_reward = max(1e-3, (-REWARD_FOR_FASTEST_TIME /
+                      (15*(STANDARD_TIME-FASTEST_TIME)))*(steps-STANDARD_TIME*15))
+        else:
+            finish_reward = 0
+        reward += finish_reward
+        
+
         ####################### VERBOSE #######################
         
         if self.verbose == True:
